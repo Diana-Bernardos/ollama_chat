@@ -20,12 +20,10 @@ class ChatUI {
     async sendMessage() {
         const message = this.messageInput.value.trim();
         if (!message) return;
-
         try {
             this.addMessage(message, 'user-message');
             this.messageInput.value = '';
             this.toggleLoading(true);
-
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: {
@@ -36,18 +34,14 @@ class ChatUI {
                     sessionId: this.sessionId 
                 })
             });
-
             const data = await response.json();
-
             if (data.error) {
                 throw new Error(data.error);
             }
-
             if (data.sessionId && !this.sessionId) {
                 this.sessionId = data.sessionId;
                 localStorage.setItem('chatSessionId', this.sessionId);
             }
-
             this.addMessage(data.response, 'bot-message');
         } catch (error) {
             console.error('Error:', error);

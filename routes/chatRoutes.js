@@ -11,13 +11,11 @@ router.post('/chat', async (req, res) => {
         if (!message) {
             return res.status(400).json({ error: 'Mensaje requerido' });
         }
-
         const response = await chatService.generateResponse(message, sessionId);
         
         if (!response.success) {
             return res.status(500).json({ error: response.error });
         }
-
         res.json({
             response: response.data,
             sessionId: response.sessionId

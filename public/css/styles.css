@@ -1,73 +1,143 @@
+/* Variables de color y tema */
 :root {
-    --primary-color: #2196f3;
-    --primary-dark: #1976d2;
-    --background-light: #f5f5f5;
-    --user-message-bg: #e3f2fd;
-    --error-color: #f44336;
+    --primary-color: #4a90e2;
+    --background-color: rgba(255, 255, 255, 0.95);
+    --text-color: #333333;
+    --border-color: #e1e1e1;
+    --hover-color: #357abd;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="oscuro"] {
+    --primary-color: #4a9eff;
+    --background-color: rgba(26, 26, 26, 0.95);
+    --text-color: #ffffff;
+    --border-color: #444444;
+    --hover-color: #357abd;
+    --shadow-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Fondo animado */
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 body {
-    font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
 }
 
+/* Animaciones */
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Chat Title */
 .chat-title {
     text-align: center;
-    color: var(--primary-dark);
+    color: var(--text-color);
     margin-bottom: 20px;
+    animation: fadeIn 0.5s ease;
 }
 
+/* Chat Container */
 #chat-container {
+    display: flex;
+    flex-direction: column;
     height: 500px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     overflow-y: auto;
     margin-bottom: 20px;
     padding: 15px;
-    background-color: var(--background-light);
+    background-color: var(--background-color);
+    animation: fadeIn 0.5s ease;
+}
+#chat-logo {
+    background-image: url('../image/Ollamachat.jpg');
+    width: 40px; /* Tamaño de la imagen */
+    height: 40px;
+    margin-right: 10px; /* Espacio entre la imagen y el título */
+    border-radius: 50%;
+
 }
 
 .message {
+    max-width: 70%;
     margin: 10px 0;
     padding: 12px;
     border-radius: 8px;
-    max-width: 80%;
     word-wrap: break-word;
+    animation: slideIn 0.3s ease;
 }
 
 .user-message {
-    background-color: var(--user-message-bg);
-    margin-left: 20%;
+    background-color: var(--primary-color);
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 5px;
 }
 
 .bot-message {
-    background-color: white;
-    margin-right: 20%;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    background-color: var(--border-color);
+    color: var(--text-color);
+    margin-right: auto;
+    border-bottom-left-radius: 5px;
 }
 
 .error-message {
-    background-color: var(--error-color);
+    background-color: #f44336;
     color: white;
     margin: 10px auto;
     text-align: center;
+    animation: slideIn 0.3s ease;
 }
 
+/* Input Container */
 #input-container {
     display: flex;
     gap: 10px;
     position: relative;
+    background-color: var(--background-color);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px var(--shadow-color);
 }
 
 #message-input {
     flex-grow: 1;
     padding: 12px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
     border-radius: 5px;
     font-size: 16px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
 }
 
 #send-button {
@@ -78,11 +148,12 @@ body {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
 }
 
 #send-button:hover {
-    background-color: var(--primary-dark);
+    background-color: var(--hover-color);
+    animation: pulse 1s infinite;
 }
 
 #send-button:disabled {
@@ -90,6 +161,7 @@ body {
     cursor: not-allowed;
 }
 
+/* Loading Indicator */
 #loading-indicator {
     display: none;
     position: absolute;
@@ -101,7 +173,7 @@ body {
 .spinner {
     width: 20px;
     height: 20px;
-    border: 3px solid #f3f3f3;
+    border: 3px solid var(--background-color);
     border-top: 3px solid var(--primary-color);
     border-radius: 50%;
     animation: spin 1s linear infinite;
@@ -110,4 +182,22 @@ body {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--hover-color);
 }
